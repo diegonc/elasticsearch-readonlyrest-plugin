@@ -143,7 +143,7 @@ public class IndicesRewriteSyncRule extends SyncRule {
       // Translate the search results indices
       SearchResponse sr = (SearchResponse) response;
       String serResp = sr.toString();
-      logger.info(serResp);
+      //logger.info(serResp);
       AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
 
         Arrays.stream(sr.getHits().getHits()).forEach(h -> {

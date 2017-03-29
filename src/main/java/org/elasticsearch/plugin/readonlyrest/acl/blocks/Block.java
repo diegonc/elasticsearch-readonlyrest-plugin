@@ -70,7 +70,7 @@ public class Block {
   private final Logger logger;
   private final ConfigurationHelper conf;
   private final Client client;
-  private final Set<SyncRule> syncConditionsToCheck = Sets.newHashSet();
+  private final Set<SyncRule> syncConditionsToCheck = Sets.newLinkedHashSet();
   private final Set<AsyncRule> asyncConditionsToCheck = Sets.newHashSet();
   private boolean authHeaderAccepted = false;
   public Block(Settings s, List<User> userList, List<LdapConfig> ldapList, Logger logger,
@@ -246,6 +246,10 @@ public class Block {
     } catch (RuleNotConfiguredException ignored) {
     }
     try {
+        syncConditionsToCheck.add(new IndicesRewriteSyncRule(s));
+    } catch (RuleNotConfiguredException ignored) {
+    }
+    try {
       syncConditionsToCheck.add(new IndicesSyncRule(s));
     } catch (RuleNotConfiguredException ignored) {
     }
@@ -255,10 +259,6 @@ public class Block {
     }
     try {
       syncConditionsToCheck.add(new GroupsSyncRule(s, userList));
-    } catch (RuleNotConfiguredException ignored) {
-    }
-    try {
-      syncConditionsToCheck.add(new IndicesRewriteSyncRule(s));
     } catch (RuleNotConfiguredException ignored) {
     }
     try {
