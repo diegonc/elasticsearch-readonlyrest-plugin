@@ -36,3 +36,4 @@ src/test/eshome/*
 *.pem
 *.pkcs8
 *.p12
+/eclipse-bin/
